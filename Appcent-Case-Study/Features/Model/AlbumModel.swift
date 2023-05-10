@@ -9,26 +9,23 @@ import Foundation
 
 struct Albums:Decodable
 {
-    let data: [Album]
-        let total: Int
-        let next: String
+        let data: [Album]
+        let total: Int?
 }
 
 struct Album: Decodable {
     let id: Int
     let title: String
-    let link, cover: String
+    let cover: String
     let coverSmall, coverMedium, coverBig, coverXl: String
     let md5Image: String
-    let genreID, fans: Int
-    let releaseDate: String
-    let recordType: RecordTypeEnum
+    let genreID, fans: Int?
+    let releaseDate: String?
+    let recordType: RecordTypeEnum?
     let tracklist: String
-    let explicitLyrics: Bool
     let type: RecordTypeEnum
-
     enum CodingKeys: String, CodingKey {
-        case id, title, link, cover
+        case id, title, cover
         case coverSmall = "cover_small"
         case coverMedium = "cover_medium"
         case coverBig = "cover_big"
@@ -39,11 +36,12 @@ struct Album: Decodable {
         case releaseDate = "release_date"
         case recordType = "record_type"
         case tracklist
-        case explicitLyrics = "explicit_lyrics"
         case type
     }
 }
 enum RecordTypeEnum: String, Decodable {
     case album = "album"
     case single = "single"
+    case ep = "ep"
+
 }

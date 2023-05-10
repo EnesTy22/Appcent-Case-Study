@@ -8,9 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeVC" customModule="Appcent_Case_Study" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AlbumVC" customModule="Appcent_Case_Study" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="yUg-pR-JUO" id="b45-BY-1wg"/>
+                <outlet property="tableView" destination="SbO-ej-Qwe" id="LX0-qh-mvG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,26 +19,20 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="yUg-pR-JUO">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="SbO-ej-Qwe">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="iYD-Jc-gGQ">
-                        <size key="itemSize" width="150" height="150"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="25" minY="20" maxX="25" maxY="20"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="yUg-pR-JUO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Vtw-Xz-gAM"/>
-                <constraint firstItem="yUg-pR-JUO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="cQO-yo-OAp"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="yUg-pR-JUO" secondAttribute="bottom" id="eXw-UE-Bkn"/>
-                <constraint firstAttribute="trailing" secondItem="yUg-pR-JUO" secondAttribute="trailing" id="ztD-jB-PUb"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="SbO-ej-Qwe" secondAttribute="bottom" id="Faq-NP-s9e"/>
+                <constraint firstItem="SbO-ej-Qwe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="IKk-Kj-S5n"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SbO-ej-Qwe" secondAttribute="trailing" id="pUq-VK-t10"/>
+                <constraint firstItem="SbO-ej-Qwe" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="wN7-Rc-mZh"/>
             </constraints>
-            <point key="canvasLocation" x="67" y="21"/>
+            <point key="canvasLocation" x="127" y="20"/>
         </view>
     </objects>
     <resources>

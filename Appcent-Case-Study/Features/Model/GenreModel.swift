@@ -12,8 +12,8 @@ struct Genres:Decodable{
 struct Genre: Decodable {
     let id: Int
     let name: String
-    let picture: String
-    let pictureSmall, pictureMedium, pictureBig, pictureXl: String
+    let picture: String?
+    let pictureSmall, pictureMedium, pictureBig, pictureXl: String?
     let type: TypeEnum
 
     enum CodingKeys: String, CodingKey {

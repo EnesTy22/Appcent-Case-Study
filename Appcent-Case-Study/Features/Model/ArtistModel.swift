@@ -14,9 +14,8 @@ struct Artists: Decodable {
 struct Artist: Decodable {
     let id: Int
     let name: String
-    let picture: String
-    let pictureSmall, pictureMedium, pictureBig, pictureXl: String
-    let radio: Bool
+    let picture: String?
+    let pictureSmall,pictureMedium, pictureBig, pictureXl: String?
     let tracklist: String
     let type: TypeEnum
 
@@ -26,7 +25,7 @@ struct Artist: Decodable {
         case pictureMedium = "picture_medium"
         case pictureBig = "picture_big"
         case pictureXl = "picture_xl"
-        case radio, tracklist, type
+        case tracklist, type
     }
 }
 

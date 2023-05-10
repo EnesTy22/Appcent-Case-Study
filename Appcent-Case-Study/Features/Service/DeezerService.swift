@@ -1,15 +1,8 @@
-//
-//  DeezerService.swift
-//  Appcent-Case-Study
-//
-//  Created by Enes Talha Yılmaz on 8.05.2023.
-//
-
 import Foundation
 import Alamofire
 
 protocol DeezerServiceProtocol{
-    func request<T:Decodable>(path:String,onSuccess:@escaping (T)->Void,onFail: @escaping (String?)->Void)
+    func request<T:Decodable>(path: String,onSuccess:@escaping (T)->Void,onFail: @escaping (String?)->Void, method: HTTPMethod?)
 }
 
 enum DeezerServicePath: String {
@@ -22,10 +15,11 @@ enum DeezerServicePath: String {
 
 }
 
-struct DeezerService:DeezerServiceProtocol{
-    func request<T>(path:String,onSuccess: @escaping (T) -> Void, onFail: @escaping (String?) -> Void) where T : Decodable {
-        print(path)
-        AF.request(path as URLConvertible,method: .get).validate().responseDecodable(of:T.self){ (response) in
+struct DeezerService: DeezerServiceProtocol{
+    static let shared = DeezerService()
+    
+    func request<T>(path: String,onSuccess: @escaping (T) -> Void, onFail: @escaping (String?) -> Void, method: HTTPMethod? = .get) where T : Decodable {
+        AF.request(DeezerServicePath.BASE_URL.rawValue + path,method: method ?? .get).validate().responseDecodable(of:T.self){ (response) in
             guard let items = response.value else{
                 onFail(response.debugDescription)
                 return
@@ -34,3 +28,4 @@ struct DeezerService:DeezerServiceProtocol{
         }
     }
 }
+
