@@ -33,11 +33,7 @@ class ViewController: UIViewController {
         //    print(error)
         //}
         
-        DeezerService.shared.request(path: DeezerServicePath.selectedAlbumPath(artistId: "8354140", albumId: "168136152")) {  (selectedGenre:TrackDatas) in
-           print(selectedGenre)
-        } onFail: { error in
-            print(error)
-        }
+        
     }
 }
 

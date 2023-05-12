@@ -12,6 +12,8 @@ final class AlbumVC: UIViewController {
     @IBOutlet var tableView: UITableView!{
         didSet{
             tableView.register(UINib(nibName: AlbumTableViewCell.identifier, bundle: nil),forCellReuseIdentifier: AlbumTableViewCell.identifier)
+            tableView.allowsMultipleSelection = false
+                tableView.allowsSelection = true
             
         }
     }
@@ -40,6 +42,17 @@ extension AlbumVC: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.allTracks.value.count
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? AlbumTableViewCell {
+            cell.playBtnClicked(isPlaying: true)
+                }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? AlbumTableViewCell {
+            cell.playBtnClicked(isPlaying: false)
+                }
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         90
     }
@@ -50,7 +63,7 @@ extension AlbumVC: UITableViewDelegate,UITableViewDataSource{
             return UITableViewCell()
         }
         self.title = viewModel.album.value?.title ?? "Unknown Album"
-        cell.Configure(track: viewModel.allTracks.value[indexPath.row],album: viewModel.album.value)
+        cell.configure(track: viewModel.allTracks.value[indexPath.row],album: viewModel.album.value)
         return cell
         //viewModel.allTracks.value
     }}

@@ -12,6 +12,7 @@ enum DeezerServicePath: String {
     case ARTISTSPATH = "/artists"
     case ALBUMPATH = "/album"
     case ALBUMSPATH = "/albums"
+    case TRACKPATH = "/track"
 
 }
 

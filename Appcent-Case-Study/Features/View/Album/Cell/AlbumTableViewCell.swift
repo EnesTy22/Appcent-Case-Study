@@ -6,7 +6,15 @@ final class AlbumTableViewCell: UITableViewCell {
 
     @IBOutlet private var trackTitle: UILabel!
     @IBOutlet private var imgView: UIImageView!
-    @IBOutlet private var playBtn: UIButton!
+    @IBOutlet var favBtn: UIButton!
+    @IBOutlet var trackLength: UILabel!
+    @IBOutlet private var playBtn: UIButton!{
+        didSet{
+            playBtn.setTitleColor(.blue, for: .normal)
+            playBtn.isUserInteractionEnabled = false
+
+        }
+    }
     @IBOutlet private var imgViewBackground: UIView!
     {
         didSet{
@@ -14,56 +22,44 @@ final class AlbumTableViewCell: UITableViewCell {
             imgViewBackground.clipsToBounds = true
         }
     }
-    var avPlayer :AVPlayer?
-    var isPlaying = false
-    let url = URL(string: "https://cdns-preview-b.dzcdn.net/stream/c-bf0d36bcdd35c73c922cda15f95016f5-2.mp3")!
-           
-           // AVPlayer'ı oluşturun
-           
+    
+    let viewModel = AlbumTableViewCellVM()
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-
         self.imgView.layer.cornerRadius = 10;
         self.imgView.clipsToBounds = true
-    }
-    private func uiSetup(){
-        /*layer.cornerRadius = 10
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = .zero
-        layer.shadowOpacity = 0.6*/
         self.backgroundColor = .secondarySystemBackground
-        
-       }
-    func Configure(track:Track,album:Album?){
-        if let album = album{
-            if let imageUrl = URL(string: album.coverMedium)
-                {
-                    imgView.kf.setImage(with: imageUrl)
-                }
-        }
-        uiSetup()
-        trackTitle.text = track.title
+
     }
-    private func PlayDemoTrack(){
-        
+
+    func configure(track:Track,album:Album?){
+        bind()
+        if let album = album, let imageUrl = URL(string: album.coverMedium) {
+                    imgView.kf.setImage(with: imageUrl)
+        }
+        viewModel.album = album
+        if(viewModel.track == nil){
+            
+        }
+        viewModel.track.accept(track)
+        trackTitle.text = track.title
+        trackLength.text = track.duration.minuteFormat()
     }
     
-    @IBAction func playBtn(_ sender: Any) {
-        if !isPlaying{
-            avPlayer = AVPlayer(url: url)
-            avPlayer?.play()
-            isPlaying = true
+    func playBtnClicked(isPlaying:Bool){
+        if isPlaying && !viewModel.isAlreadyPlaying{
+            viewModel.isAlreadyPlaying = true
+            MusicPlayer.shared.playTrack(url:viewModel.track.value?.preview )
         playBtn.setImage(UIImage(systemName: "stop.fill"), for: .normal)
             let attributedString = NSAttributedString(string: "stop", attributes: [
                 .foregroundColor: UIColor.black,
@@ -75,9 +71,10 @@ final class AlbumTableViewCell: UITableViewCell {
 
         }
         else{
-            avPlayer?.pause()
-            isPlaying = false
+            viewModel.isAlreadyPlaying = false
+            MusicPlayer.shared.pause()
             playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            
             let attributedString = NSAttributedString(string: "play", attributes: [
                 .foregroundColor: UIColor.black,
                 .font: UIFont.systemFont(ofSize: 12),
@@ -86,6 +83,32 @@ final class AlbumTableViewCell: UITableViewCell {
             playBtn.setAttributedTitle(attributedString, for: .normal)
 
         }
-        
+    }
+   
+    @IBAction func addFavBtn(_ sender: Any) {
+        viewModel.addToFavList()
+    }
+}
+private extension AlbumTableViewCell{
+    private func bind(){
+        favIconbind()
+    }
+    private func favIconbind(){
+        viewModel.isInFav
+            .distinctUntilChanged()
+            .subscribe { [weak self] response in
+                if response {
+                    self?.addItFav()
+            }
+            else{
+                self?.removeFav()
+            }
+        }.disposed(by: viewModel.disposeBag)
+    }
+    private func addItFav(){
+        favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+    }
+    private func removeFav(){
+        favBtn.setImage(UIImage(systemName: "heart"), for: .normal)
     }
 }

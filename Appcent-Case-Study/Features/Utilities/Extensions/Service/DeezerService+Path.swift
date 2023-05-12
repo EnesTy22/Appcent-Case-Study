@@ -17,4 +17,7 @@ extension DeezerServicePath
     static func selectedArtistPath(artistId: String)-> String{
         return "\(ARTISTPATH.rawValue)/\(artistId)"
     }
+    static func selectedTrackPath(trackId:String)-> String{
+        return "\(TRACKPATH.rawValue)/\(trackId)"
+    }
 }

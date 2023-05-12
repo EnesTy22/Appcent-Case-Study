@@ -19,13 +19,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // general foundation working
             // tabbar controller holding navigation controller, holding view controller
             
-            let homeNC = createNavigationController(title: "Home", viewContoller: HomeVC(),systemName: "house.fill", tag: 0)
+            let homeNC = createNavigationController(title: "Home", viewContoller: HomeVC(),systemName: "music.note", tag: 0)
             
-            let favoriteNC = createNavigationController(title: "Favorite Games", viewContoller: FavoritesVC(), systemName: "heart.fill", tag: 1)
+            let favoriteNC = createNavigationController(title: "Favorite Tracks", viewContoller: FavoritesVC(), systemName: "heart.fill", tag: 1)
        
             
             let tabBar = createTabBar(viewControllers: [homeNC , favoriteNC])
             
+          
+            UITabBar.appearance().barTintColor = UIColor.white
+            
+            let appearance = UITabBarAppearance()
+            let spotifyGreen = UIColor(red: 30/255.0, green: 215/255.0, blue: 96/255.0, alpha: 1.0)
+
+            
+            appearance.backgroundColor = .white
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.lightGray]
+            appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.darkGray]
+            
+
+            UITabBar.appearance().standardAppearance = appearance
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+
+
+            // Set the title attributes for the selected state
+          
             window = UIWindow(frame: windowScene.coordinateSpace.bounds)
             window?.windowScene = windowScene
             window?.rootViewController = tabBar

@@ -16,7 +16,6 @@ struct AlbumVM
     func fetchAllTracks(artist:Artist,album:Album){
         let artistId = String(artist.id)
         let albumId = String(album.id)
-        print(DeezerServicePath.selectedAlbumPath(artistId: artistId, albumId: albumId))
         DeezerService.shared.request(path: DeezerServicePath.selectedAlbumPath(artistId: artistId, albumId: albumId)) { (response:TrackDatas) in
             allTracks.accept(response.tracks.data)
         } onFail: { error in
@@ -39,7 +38,7 @@ extension AlbumVM{
                             return
                         }
                 fetchAllTracks(artist: artist, album: album)
-            })
+            }).disposed(by: disposeBag)
     }
     
 }

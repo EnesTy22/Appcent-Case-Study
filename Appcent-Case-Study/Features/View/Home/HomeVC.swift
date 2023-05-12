@@ -9,7 +9,7 @@ final class HomeVC: UIViewController {
 
     @IBOutlet var collectionView: UICollectionView!{
         didSet {
-        collectionView.register(UINib(nibName: CategoriesCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: CategoriesCollectionViewCell.nibName)
+        collectionView.register(UINib(nibName: CategoriesCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: CategoriesCollectionViewCell.identifier)
     }}
     override func viewDidLoad() {
         super.viewDidLoad()

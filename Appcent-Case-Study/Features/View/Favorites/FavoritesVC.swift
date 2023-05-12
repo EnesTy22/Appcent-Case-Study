@@ -7,32 +7,60 @@
 
 import UIKit
 
-class FavoritesVC: UIViewController {
+final class FavoritesVC: UIViewController {
 
+    @IBOutlet var tableView: UITableView!{
+        didSet{
+            tableView.register(UINib(nibName: FavoritesTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: FavoritesTableViewCell.identifier)
+        }
+    }
+    private let viewModel = FavoritesVM()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //navigationController?.pushViewController(detailsVC, animated: true)
-        // Do any additional setup after loading the view.
+        tableView.delegate = self
+        tableView.dataSource = self
     }
-    override func viewWillAppear(_ animated: Bool) {
+}
+extension FavoritesVC:UITableViewDelegate,UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-    }
-
-    @IBAction func btnClick(_ sender: Any) {
-        let detailsVC = DetailsVC(nibName: "DetailsVC", bundle: nil)
-        
-        navigationController?.pushViewController(detailsVC, animated: true)
+        return viewModel.allFavoriteTrackId.value.count ?? 0
     }
     
-    /*
-    // MARK: - Navigation
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as? FavoritesTableViewCell else{return UITableViewCell()}
+        cell.viewModel.trackCover = viewModel.allFavoriteTrackCover.value[indexPath.row]
+        cell.viewModel.trackId.accept(viewModel.allFavoriteTrackId.value[indexPath.row])
+
+        return cell
     }
-    */
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? FavoritesTableViewCell {
+            cell.playBtnClicked(isPlaying: true)
+                }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? FavoritesTableViewCell {
+            cell.playBtnClicked(isPlaying: false)
+                }
+    }
+    
+    
+}
+private extension FavoritesVC{
+    private func bind(){
+        allFavBind()
+    }
+    private func allFavBind(){
+        viewModel
+            .allFavoriteTrackId.subscribe {[weak self] response in
+                self?.tableView.reloadData()
+            }.disposed(by: viewModel.disposeBag)
+        viewModel
+            .allFavoriteTrackCover.subscribe {[weak self] response in
+                self?.tableView.reloadData()
+            }.disposed(by: viewModel.disposeBag)
+    }
 }

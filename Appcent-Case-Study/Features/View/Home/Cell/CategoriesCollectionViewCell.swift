@@ -29,5 +29,4 @@ final class CategoriesCollectionViewCell: UICollectionViewCell {
         
     }
     
-    static let nibName = "CategoriesCollectionViewCell"
 }

@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FavoritesVC" customModule="Appcent_Case_Study" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="vIi-xo-rBo" id="C2T-O6-gD3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,20 +19,18 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vce-HH-7uo">
-                    <rect key="frame" x="159" y="408.66666666666669" width="75" height="35"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                    <connections>
-                        <action selector="btnClick:" destination="-1" eventType="touchUpInside" id="bhd-KX-QbJ"/>
-                    </connections>
-                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vIi-xo-rBo">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="vce-HH-7uo" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="AOk-w0-zDI"/>
-                <constraint firstItem="vce-HH-7uo" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="dKa-iK-ibT"/>
+                <constraint firstItem="vIi-xo-rBo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Hhc-Ed-rNF"/>
+                <constraint firstItem="vIi-xo-rBo" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Uco-gP-SI6"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="vIi-xo-rBo" secondAttribute="bottom" id="Yhg-ft-yT3"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vIi-xo-rBo" secondAttribute="trailing" id="ZeT-hV-dgn"/>
             </constraints>
             <point key="canvasLocation" x="102" y="20"/>
         </view>
