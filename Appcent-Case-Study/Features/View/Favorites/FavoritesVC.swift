@@ -6,19 +6,26 @@
 //
 
 import UIKit
-
+import Lottie
 final class FavoritesVC: UIViewController {
 
+    var animationView : LottieAnimationView?
+    
     @IBOutlet var tableView: UITableView!{
         didSet{
             tableView.register(UINib(nibName: FavoritesTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: FavoritesTableViewCell.identifier)
         }
     }
-    private let viewModel = FavoritesVM()
+    let viewModel = FavoritesVM()
     override func viewDidLoad() {
         super.viewDidLoad()
+       // CoreService.shared?.deleteAllData()
+        bind()
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    func configure(){
+        
     }
 }
 extension FavoritesVC:UITableViewDelegate,UITableViewDataSource{
@@ -30,8 +37,7 @@ extension FavoritesVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as? FavoritesTableViewCell else{return UITableViewCell()}
-        cell.viewModel.trackCover = viewModel.allFavoriteTrackCover.value[indexPath.row]
-        cell.viewModel.trackId.accept(viewModel.allFavoriteTrackId.value[indexPath.row])
+        cell.reloadConfigure(favoriteVC: self, trackId: viewModel.allFavoriteTrackId.value[indexPath.row], trackCover: viewModel.allFavoriteTrackCover.value[indexPath.row])
 
         return cell
     }
@@ -50,17 +56,20 @@ extension FavoritesVC:UITableViewDelegate,UITableViewDataSource{
     
 }
 private extension FavoritesVC{
-    private func bind(){
+    func bind(){
         allFavBind()
     }
-    private func allFavBind(){
+    func allFavBind(){
         viewModel
             .allFavoriteTrackId.subscribe {[weak self] response in
                 self?.tableView.reloadData()
+                
             }.disposed(by: viewModel.disposeBag)
         viewModel
             .allFavoriteTrackCover.subscribe {[weak self] response in
                 self?.tableView.reloadData()
             }.disposed(by: viewModel.disposeBag)
     }
+    
+    
 }

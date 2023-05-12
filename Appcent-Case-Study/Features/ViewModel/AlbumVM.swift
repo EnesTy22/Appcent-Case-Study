@@ -25,7 +25,7 @@ struct AlbumVM
     }
     
 }
-extension AlbumVM{
+private extension AlbumVM{
     
     func bind(){
         combine()

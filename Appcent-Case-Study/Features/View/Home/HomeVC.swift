@@ -1,11 +1,10 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ProgressHUD
 
 final class HomeVC: UIViewController {
     private let viewModel = HomeVM()
-    
-
 
     @IBOutlet var collectionView: UICollectionView!{
         didSet {
@@ -13,6 +12,7 @@ final class HomeVC: UIViewController {
     }}
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         bind()
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -23,26 +23,20 @@ final class HomeVC: UIViewController {
 }
 
 // MARK: Bindings.
-
 private extension HomeVC {
     func bind() {
         labelBind()
-        labelCountbind()
     }
     
     func labelBind() {
         viewModel.allGenre
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] allGenre in
-                // self?.label.text = "\(allGenre.element?.count ?? 0)"
                 self?.collectionView.reloadData()
             }
             .disposed(by: viewModel.disposeBag)
     }
     
-    func labelCountbind() {
-        
-    }
 }
 
 // MARK: Collectionview Delegates
@@ -61,7 +55,8 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCollectionViewCell.identifier, for: indexPath) as? CategoriesCollectionViewCell else { return UICollectionViewCell() }
-        cell.configure(genre: viewModel.allGenre.value[indexPath.row], isSelected: true)
+        self.title = "AppCent-Music"
+        cell.configure(genre: viewModel.allGenre.value[indexPath.row])
         return cell
     }
     

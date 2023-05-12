@@ -16,6 +16,7 @@ final class FavoritesTableViewCellVM{
     var trackCover : String?
     var isAlreadyPlaying = false
     var isInFav = BehaviorRelay<Bool>(value: true)
+    var favoriteVc : FavoritesVC?
 
     init()
     {
@@ -31,6 +32,10 @@ final class FavoritesTableViewCellVM{
             isInFav.accept(true)
             CoreService.shared?.addFavTrack(trackId: track.value?.id,trackCover: trackCover)
         }
+    }
+    func updateFavIcon()
+    {
+            isInFav.accept(true)
     }
 
     func fetchFavTrack(trackId:Int){
@@ -52,6 +57,7 @@ private extension FavoritesTableViewCellVM{
             .compactMap{$0}
             .subscribe { [weak self] trackId in
                     self?.fetchFavTrack(trackId: trackId)
+                self?.updateFavIcon()
             }.disposed(by: disposeBag)
     }
     

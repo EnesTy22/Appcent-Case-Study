@@ -3,10 +3,16 @@
 import Foundation
 import UIKit
 import CoreData
+import RxCocoa
+import RxSwift
 
 final class CoreService{
     static let shared = CoreService()
-    
+    let reloadPage = BehaviorRelay<Void>(value: ())
+    let deletePage = BehaviorRelay<Void>(value: ())
+
+    var disposeBag = DisposeBag()
+
     var managedContext:NSManagedObjectContext
     
     init?(){
@@ -49,7 +55,6 @@ final class CoreService{
     }
     func deleteFavTrack(trackId:Int?){
         guard let trackId else {return}
-
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackEntity")
         fetchRequest.predicate = NSPredicate(format: "trackId == %d",trackId)
         do{
@@ -63,11 +68,22 @@ final class CoreService{
         catch {
             print("Hata oluştu: \(error.localizedDescription)")
         }
-        //managedContext.delete()
+        reloadPage.accept(())
+
+    }
+    func deleteAllData(){
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackEntity")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        do {
+            try managedContext.execute(deleteRequest)
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not delete. \(error), \(error.userInfo)")
+        }
     }
     func addFavTrack(trackId:Int?,trackCover:String?){
         guard let trackId else {return}
-        
         let entity = NSEntityDescription.entity(forEntityName: "TrackEntity", in: managedContext)!
         let item = NSManagedObject(entity: entity, insertInto: managedContext)
         item.setValue(trackId, forKey: "trackId")
@@ -76,5 +92,7 @@ final class CoreService{
         catch let error{
             print("Error while saving favorites")
         }
+        reloadPage.accept(())
+
     }
 }

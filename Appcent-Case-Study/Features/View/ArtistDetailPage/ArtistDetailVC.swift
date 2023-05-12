@@ -8,7 +8,8 @@
 import UIKit
 import RxSwift
 import RxCocoa
-class ArtistDetailVC: UIViewController {
+
+final class ArtistDetailVC: UIViewController {
     
     let viewModel = ArtistDetailVM()
     

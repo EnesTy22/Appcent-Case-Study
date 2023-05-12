@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class ArtistsVM{
+final class ArtistsVM{
     let disposeBag = DisposeBag()
     let AllArtist = BehaviorRelay<[Artist]>(value: [])
     let loading = BehaviorRelay(value: false)
@@ -32,7 +32,7 @@ class ArtistsVM{
     }
     
 }
-extension ArtistsVM {
+private extension ArtistsVM {
     func bind(){
         genreBind()
     }

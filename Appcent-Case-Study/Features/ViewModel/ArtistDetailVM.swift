@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+
 struct ArtistDetailVM{
     
     let disposeBag = DisposeBag()
@@ -30,10 +31,11 @@ struct ArtistDetailVM{
     init(){
         bind()
     }
+}
+private extension ArtistDetailVM{
     private func bind(){
         Artistbind()
     }
-    
     private func Artistbind(){
         artist.compactMap{$0}
             .subscribe { response in

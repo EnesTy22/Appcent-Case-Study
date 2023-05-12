@@ -2,12 +2,13 @@
 import UIKit
 import AVFoundation
 import Lottie
-import RxCocoa
 import RxSwift
+import RxCocoa
 
-final class AlbumTableViewCell: UITableViewCell {
-    var animationView: LottieAnimationView?
-    var activeTrackIdBindVar: Disposable?
+final class FavoritesTableViewCell: UITableViewCell {
+    var activeTrackIdBindVar : Disposable?
+    var animationView : LottieAnimationView?
+
 
     @IBOutlet private var trackTitle: UILabel!
     @IBOutlet private var imgView: UIImageView!
@@ -28,33 +29,40 @@ final class AlbumTableViewCell: UITableViewCell {
         }
     }
     
-    let viewModel = AlbumTableViewCellVM()
+    let viewModel = FavoritesTableViewCellVM()
 
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        bind()
         self.imgView.layer.cornerRadius = 10;
         self.imgView.clipsToBounds = true
         self.backgroundColor = .secondarySystemBackground
+        //checkIfMusicActive(response: MusicPlayer.shared.activeTrackId.value, id: viewModel.trackId.value)
         
+        
+
 
     }
 
-    func configure(track:Track,album:Album?){
-        bind()
-        if let album = album, let imageUrl = URL(string: album.coverMedium) {
+    func configure(track:Track,trackCover:String?){
+        if let trackCover = trackCover, let imageUrl = URL(string: trackCover) {
                     imgView.kf.setImage(with: imageUrl)
         }
-        viewModel.album = album
-        viewModel.track.accept(track)
         trackTitle.text = track.title
         trackLength.text = track.duration.minuteFormat()
+    }
+    func reloadConfigure(favoriteVC:FavoritesVC,trackId:Int,trackCover:String){
+        //playBtnClicked(isPlaying: false)
+        viewModel.favoriteVc = favoriteVC
+        viewModel.trackCover = trackCover
+        viewModel.trackId.accept(trackId)
     }
     
     func playBtnClicked(isPlaying:Bool){
         if isPlaying && !viewModel.isAlreadyPlaying{
             viewModel.isAlreadyPlaying = true
-            MusicPlayer.shared.playTrack(url:viewModel.track.value?.preview,trackId: viewModel.track.value?.id ?? 0 )
+            MusicPlayer.shared.playTrack(url:viewModel.track.value?.preview,trackId: viewModel.trackId.value)
             animationView = .init(name:"Play")
             animationView?.frame = playBtn.bounds
             playBtn.addSubview(animationView!)
@@ -66,7 +74,9 @@ final class AlbumTableViewCell: UITableViewCell {
                 .font: UIFont.systemFont(ofSize: 12),
             ])
             playBtn.setAttributedTitle(attributedString, for: .normal)
-            activeTrackIdBind()
+        activeTrackIdBind()
+
+
         }
         else{
             viewModel.isAlreadyPlaying = false
@@ -89,37 +99,55 @@ final class AlbumTableViewCell: UITableViewCell {
         viewModel.addToFavList()
     }
 }
-private extension AlbumTableViewCell{
-     func bind(){
-        favIconbind()
-    }
-     func favIconbind(){
-        viewModel.isInFav
-            .distinctUntilChanged()
-            .subscribe { [weak self] response in
-            if response {
-                    self?.addItFav()
-            }
-            else{
-                self?.removeFav()
-            }
-        }.disposed(by: viewModel.disposeBag)
+
+private extension FavoritesTableViewCell{
+    private func bind(){
+        favIconBind()
+        trackBind()
     }
     func activeTrackIdBind(){
         activeTrackIdBindVar = MusicPlayer.shared.activeTrackId
-           .distinctUntilChanged()
-           .subscribe { [weak self] response in
-               if response.element != self?.viewModel.track.value?.id {
-                   self?.activeTrackIdBindVar?.dispose()
-                   self?.playBtnClicked(isPlaying: false)
-           }
-           
-       }
-   }
-     func addItFav(){
-        favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            .distinctUntilChanged()
+            .subscribe { [weak self] response in
+                self?.checkIfMusicActive(response: response.element, id: self?.viewModel.track.value?.id)
+            }
+        
     }
-     func removeFav(){
-        favBtn.setImage(UIImage(systemName: "heart"), for: .normal)
+    func checkIfMusicActive(response:Int?,id:Int?){
+        if response != id {
+            activeTrackIdBindVar?.dispose()
+            playBtnClicked(isPlaying: false)
+        }
+        
     }
-}
+    
+        func favIconBind(){
+            viewModel.isInFav
+                .distinctUntilChanged()
+                .subscribe { [weak self] response in
+                    
+                    if response {
+                        self?.addItFav()
+                    }
+                    else{
+                        self?.removeFav()
+                    }
+                    
+                }.disposed(by: viewModel.disposeBag)
+        }
+        func trackBind(){
+            viewModel.track
+                .compactMap{$0}
+                .subscribe { [weak self] response in
+                    self?.configure(track: response, trackCover:self?.viewModel.trackCover)
+                    //self?.checkIfMusicActive(response: MusicPlayer.shared.activeTrackId.value, id: response.id)
+                }.disposed(by: viewModel.disposeBag)
+        }
+        func addItFav(){
+            favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
+        func removeFav(){
+            favBtn.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
+        
+    }

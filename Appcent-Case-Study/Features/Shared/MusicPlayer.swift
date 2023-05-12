@@ -7,10 +7,12 @@
 
 import Foundation
 import AVFoundation
+import RxCocoa
+import RxSwift
 
 final class MusicPlayer{
     static let shared = MusicPlayer()
-    
+    var activeTrackId = BehaviorRelay<Int>(value: 0)
     private var avPlayer :AVPlayer?
 
     func pause()
@@ -18,8 +20,8 @@ final class MusicPlayer{
         guard let avPlayer else {return}
         avPlayer.pause()
     }
-    func playTrack(url: String?){
-        
+    func playTrack(url: String?,trackId:Int){
+        activeTrackId.accept(trackId)
         guard let url ,let musicUrl = URL(string: url) else { return }
         avPlayer = AVPlayer(url: musicUrl)
         avPlayer?.play()
