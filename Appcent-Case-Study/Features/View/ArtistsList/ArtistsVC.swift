@@ -21,6 +21,7 @@ final class ArtistsVC: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        Loader.shared.open(on: view)
         bind()
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -34,8 +35,12 @@ private extension ArtistsVC{
     }
     func artistListBind(){
         artistVM.AllArtist.observe(on: MainScheduler.instance)
-            .subscribe { [weak self] _ in
+            .subscribe { [weak self] response in
                 self?.collectionView.reloadData()
+                if response.element?.count != 0{
+                    Loader.shared.close()
+                }
+
                 
 
             }.disposed(by: artistVM.disposeBag)

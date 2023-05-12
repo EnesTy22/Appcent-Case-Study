@@ -38,11 +38,7 @@ final class FavoritesTableViewCell: UITableViewCell {
         self.imgView.layer.cornerRadius = 10;
         self.imgView.clipsToBounds = true
         self.backgroundColor = .secondarySystemBackground
-        //checkIfMusicActive(response: MusicPlayer.shared.activeTrackId.value, id: viewModel.trackId.value)
-        
-        
-
-
+    
     }
 
     func configure(track:Track,trackCover:String?){
@@ -53,7 +49,6 @@ final class FavoritesTableViewCell: UITableViewCell {
         trackLength.text = track.duration.minuteFormat()
     }
     func reloadConfigure(favoriteVC:FavoritesVC,trackId:Int,trackCover:String){
-        //playBtnClicked(isPlaying: false)
         viewModel.favoriteVc = favoriteVC
         viewModel.trackCover = trackCover
         viewModel.trackId.accept(trackId)

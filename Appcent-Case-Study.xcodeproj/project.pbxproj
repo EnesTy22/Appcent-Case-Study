@@ -60,6 +60,7 @@
 		BD9E5D302A08F74A005B944F /* Appcent_Case_StudyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E5D2F2A08F74A005B944F /* Appcent_Case_StudyUITestsLaunchTests.swift */; };
 		BD9E5D402A090CD5005B944F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BD9E5D3F2A090CD5005B944F /* Alamofire */; };
 		BD9E5D432A090E3C005B944F /* DeezerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E5D422A090E3C005B944F /* DeezerService.swift */; };
+		BDC622982A0EF7E9005BCDBE /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC622972A0EF7E9005BCDBE /* Loader.swift */; };
 		BDDB2FDF2A0D639600A83E5F /* FavoritesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDB2FDE2A0D639600A83E5F /* FavoritesVM.swift */; };
 		BDED5AF42A0AB0A1005CC3D4 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDED5AF32A0AB0A1005CC3D4 /* UIViewController+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -133,6 +134,7 @@
 		BD9E5D2D2A08F74A005B944F /* Appcent_Case_StudyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appcent_Case_StudyUITests.swift; sourceTree = "<group>"; };
 		BD9E5D2F2A08F74A005B944F /* Appcent_Case_StudyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appcent_Case_StudyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BD9E5D422A090E3C005B944F /* DeezerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerService.swift; sourceTree = "<group>"; };
+		BDC622972A0EF7E9005BCDBE /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		BDDB2FDE2A0D639600A83E5F /* FavoritesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVM.swift; sourceTree = "<group>"; };
 		BDED5AF32A0AB0A1005CC3D4 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -349,6 +351,7 @@
 			isa = PBXGroup;
 			children = (
 				BD99CF222A0C34840031E074 /* MusicPlayer.swift */,
+				BDC622972A0EF7E9005BCDBE /* Loader.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				BD9E5D142A08F747005B944F /* Appcent_Case_Study.xcdatamodeld in Sources */,
 				BD5AEAFA2A09642100973634 /* AlbumModel.swift in Sources */,
 				BD9E5D0A2A08F747005B944F /* AppDelegate.swift in Sources */,
+				BDC622982A0EF7E9005BCDBE /* Loader.swift in Sources */,
 				BD668AB82A0A9F6300902831 /* ArtistDetailVM.swift in Sources */,
 				BD99CF252A0C45F50031E074 /* AlbumTableViewCellVM.swift in Sources */,
 				BD99CF1F2A0C250F0031E074 /* AlbumTableViewCell.swift in Sources */,

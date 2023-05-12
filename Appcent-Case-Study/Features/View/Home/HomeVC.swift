@@ -1,7 +1,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import ProgressHUD
 
 final class HomeVC: UIViewController {
     private let viewModel = HomeVM()
@@ -12,7 +11,7 @@ final class HomeVC: UIViewController {
     }}
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        Loader.shared.open(on: view)
         bind()
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -31,7 +30,11 @@ private extension HomeVC {
     func labelBind() {
         viewModel.allGenre
             .observe(on: MainScheduler.instance)
+            .compactMap{$0}
             .subscribe { [weak self] allGenre in
+                if allGenre.element?.count != 0{
+                    Loader.shared.close()
+                }
                 self?.collectionView.reloadData()
             }
             .disposed(by: viewModel.disposeBag)
@@ -55,7 +58,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCollectionViewCell.identifier, for: indexPath) as? CategoriesCollectionViewCell else { return UICollectionViewCell() }
-        self.title = "AppCent-Music"
+        self.title = "Deezer"
         cell.configure(genre: viewModel.allGenre.value[indexPath.row])
         return cell
     }

@@ -14,6 +14,8 @@ final class AlbumVC: UIViewController {
             tableView.register(UINib(nibName: AlbumTableViewCell.identifier, bundle: nil),forCellReuseIdentifier: AlbumTableViewCell.identifier)
             tableView.allowsMultipleSelection = false
                 tableView.allowsSelection = true
+            tableView.allowsSelectionDuringEditing = true
+
             
         }
     }
@@ -21,8 +23,7 @@ final class AlbumVC: UIViewController {
     let viewModel = AlbumVM()
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.allowsSelectionDuringEditing = true
-        
+        Loader.shared.open(on: view)
         bind()
         tableView.delegate = self
         tableView.dataSource = self
@@ -75,6 +76,10 @@ private extension AlbumVC{
         viewModel.allTracks
             .subscribe {[weak self] response in
                 self?.tableView.reloadData()
+                if response.element?.count != 0{
+                    Loader.shared.close()
+
+                }
             }.disposed(by: viewModel.disposeBag)
     }
 }

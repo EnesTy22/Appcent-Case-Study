@@ -23,6 +23,7 @@ final class ArtistDetailVC: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        Loader.shared.open(on: view)
         bind()
         tableView.dataSource = self
         tableView.delegate = self
@@ -38,9 +39,12 @@ private extension ArtistDetailVC{
         viewModel.albums
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] album in
-                print(album.element?.count)
                 self?.tableView?.reloadData()
+                if album.element?.count != 0 {
+                    Loader.shared.close()
+                    }
             }.disposed(by: viewModel.disposeBag)
+        
         viewModel.artist
             .observe(on: MainScheduler.instance)
             .compactMap{$0}
