@@ -24,7 +24,7 @@ final class FavoritesTableViewCell: UITableViewCell {
     @IBOutlet private var imgViewBackground: UIView!
     {
         didSet{
-            imgViewBackground.layer.cornerRadius = imgViewBackground.frame.size.height / 2
+            imgViewBackground.layer.cornerRadius = imgViewBackground.frame.size.height * 3.15
             imgViewBackground.clipsToBounds = true
         }
     }
@@ -52,6 +52,35 @@ final class FavoritesTableViewCell: UITableViewCell {
         viewModel.favoriteVc = favoriteVC
         viewModel.trackCover = trackCover
         viewModel.trackId.accept(trackId)
+        if(viewModel.trackId.value == MusicPlayer.shared.activeTrackId.value){
+            viewModel.isAlreadyPlaying = true
+            
+            animationView = .init(name:"Play")
+            animationView?.frame = playBtn.bounds
+            playBtn.addSubview(animationView!)
+            animationView?.loopMode = .loop
+            animationView?.play()
+            playBtn.setImage(UIImage(), for: .normal)
+            let attributedString = NSAttributedString(string: "", attributes: [
+                .foregroundColor: UIColor.black,
+                .font: UIFont.systemFont(ofSize: 12),
+            ])
+            playBtn.setAttributedTitle(attributedString, for: .normal)
+        //activeTrackIdBind()
+        }
+        else{
+            viewModel.isAlreadyPlaying = false
+            animationView?.removeFromSuperview()
+            animationView = nil
+            playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            
+            let attributedString = NSAttributedString(string: "play", attributes: [
+                .foregroundColor: UIColor.black,
+                .font: UIFont.systemFont(ofSize: 12),
+            ])
+
+            playBtn.setAttributedTitle(attributedString, for: .normal)
+        }
     }
     
     func playBtnClicked(isPlaying:Bool){

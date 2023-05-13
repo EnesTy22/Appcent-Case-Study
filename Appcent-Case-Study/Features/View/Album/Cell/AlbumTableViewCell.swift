@@ -6,6 +6,7 @@ import RxCocoa
 import RxSwift
 
 final class AlbumTableViewCell: UITableViewCell {
+    
     var animationView: LottieAnimationView?
     var activeTrackIdBindVar: Disposable?
 
@@ -89,6 +90,7 @@ final class AlbumTableViewCell: UITableViewCell {
         viewModel.addToFavList()
     }
 }
+
 private extension AlbumTableViewCell{
      func bind(){
         favIconbind()

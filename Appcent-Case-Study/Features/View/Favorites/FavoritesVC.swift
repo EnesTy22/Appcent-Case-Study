@@ -7,6 +7,7 @@
 
 import UIKit
 import Lottie
+
 final class FavoritesVC: UIViewController {
 
     var animationView : LottieAnimationView?
@@ -16,18 +17,17 @@ final class FavoritesVC: UIViewController {
             tableView.register(UINib(nibName: FavoritesTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: FavoritesTableViewCell.identifier)
         }
     }
+    
     let viewModel = FavoritesVM()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-       // CoreService.shared?.deleteAllData()
         bind()
         tableView.delegate = self
         tableView.dataSource = self
     }
-    func configure(){
-        
-    }
 }
+
 extension FavoritesVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -41,6 +41,7 @@ extension FavoritesVC:UITableViewDelegate,UITableViewDataSource{
 
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? FavoritesTableViewCell {
             cell.playBtnClicked(isPlaying: true)
@@ -55,10 +56,13 @@ extension FavoritesVC:UITableViewDelegate,UITableViewDataSource{
     
     
 }
+
 private extension FavoritesVC{
+    
     func bind(){
         allFavBind()
     }
+    
     func allFavBind(){
         viewModel
             .allFavoriteTrackId.subscribe {[weak self] response in

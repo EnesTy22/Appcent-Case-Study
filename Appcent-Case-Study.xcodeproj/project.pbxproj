@@ -170,17 +170,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BD1FD47A2A0A3BA800525E67 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				BD1FD47B2A0A3BBE00525E67 /* HomeVM.swift */,
-				BD1FD48C2A0A452700525E67 /* ArtistsVM.swift */,
-				BD668AB72A0A9F6300902831 /* ArtistDetailVM.swift */,
-				BD8A98042A0BE09700EA96FA /* AlbumVM.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		BD1FD47D2A0A3C4700525E67 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +184,7 @@
 			children = (
 				BD1FD4872A0A43DB00525E67 /* Cell */,
 				BD1FD4832A0A432300525E67 /* ArtistsVC.swift */,
+				BD1FD48C2A0A452700525E67 /* ArtistsVM.swift */,
 				BD1FD4842A0A432300525E67 /* ArtistsVC.xib */,
 			);
 			path = ArtistsList;
@@ -282,6 +272,7 @@
 			children = (
 				BD1FD47D2A0A3C4700525E67 /* Cell */,
 				BD5AEB072A09958900973634 /* HomeVC.swift */,
+				BD1FD47B2A0A3BBE00525E67 /* HomeVM.swift */,
 				BD5AEB082A09958900973634 /* HomeVC.xib */,
 			);
 			path = Home;
@@ -303,6 +294,7 @@
 			children = (
 				BD668AB92A0AAE3800902831 /* Cell */,
 				BD668AB32A0A883500902831 /* ArtistDetailVC.swift */,
+				BD668AB72A0A9F6300902831 /* ArtistDetailVM.swift */,
 				BD668AB42A0A883500902831 /* ArtistDetailVC.xib */,
 			);
 			path = ArtistDetailPage;
@@ -331,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				BD8A98062A0C15AC00EA96FA /* Cell */,
+				BD8A98042A0BE09700EA96FA /* AlbumVM.swift */,
 				BD8A97FF2A0BDB7900EA96FA /* AlbumVC.swift */,
 				BD8A98002A0BDB7900EA96FA /* AlbumVC.xib */,
 			);
@@ -420,7 +413,6 @@
 			isa = PBXGroup;
 			children = (
 				BD99CF212A0C345E0031E074 /* Shared */,
-				BD1FD47A2A0A3BA800525E67 /* ViewModel */,
 				BD5AEB062A09956A00973634 /* View */,
 				BD5AEB032A09876300973634 /* Utilities */,
 				BD5AEAF62A094AE100973634 /* Model */,
