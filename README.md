@@ -41,7 +41,6 @@
 <p float="left">
 <img src="https://github.com/SiecleQ/Appcent-Case-Study/assets/76806086/5895dd8b-9e5c-4a33-b1d4-fd5b911cb381" width="30%" height="30%" />
 <img src="https://github.com/SiecleQ/Appcent-Case-Study/assets/76806086/d49eb982-0621-434c-b167-7bac14922833" width="30%" height="30%" />
-<img src="" width="30%" height="30%" />
 </p>
 
 ## Video
