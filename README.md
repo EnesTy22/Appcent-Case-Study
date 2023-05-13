@@ -2,7 +2,7 @@
  
  MusicApp is a multifunctional Music application is builded for the iOS platform.
  
- It is using [MusicApi](https://api.deezer.com/)
+ It is using [DeezerApi](https://api.deezer.com/)
  
  ## Features
  
