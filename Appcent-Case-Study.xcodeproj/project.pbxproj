@@ -190,6 +190,7 @@
 				BD1FD4832A0A432300525E67 /* ArtistsVC.swift */,
 				BD1FD48C2A0A452700525E67 /* ArtistsVM.swift */,
 				BD1FD4842A0A432300525E67 /* ArtistsVC.xib */,
+				BD5AEAFD2A096CF900973634 /* ArtistModel.swift */,
 			);
 			path = ArtistsList;
 			sourceTree = "<group>";
@@ -224,17 +225,6 @@
 			path = LaunchScreen;
 			sourceTree = "<group>";
 		};
-		BD5AEAF62A094AE100973634 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				BD5AEAF72A094B3A00973634 /* GenreModel.swift */,
-				BD5AEAF92A09642100973634 /* AlbumModel.swift */,
-				BD5AEAFB2A0967C200973634 /* MusicModel.swift */,
-				BD5AEAFD2A096CF900973634 /* ArtistModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		BD5AEAFF2A09861300973634 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,18 +251,6 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		BD5AEB062A09956A00973634 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				BD8A97FE2A0BDB5700EA96FA /* Album */,
-				BD668AB22A0A87C600902831 /* ArtistDetailPage */,
-				BD1FD4822A0A42E100525E67 /* ArtistsList */,
-				BD5AEB0C2A09959D00973634 /* Favorites */,
-				BD5AEB0B2A09959100973634 /* Home */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		BD5AEB0B2A09959100973634 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,6 +258,7 @@
 				BD5AEB072A09958900973634 /* HomeVC.swift */,
 				BD1FD47B2A0A3BBE00525E67 /* HomeVM.swift */,
 				BD5AEB082A09958900973634 /* HomeVC.xib */,
+				BD5AEAF72A094B3A00973634 /* GenreModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -292,7 +271,8 @@
 				BD5AEB0E2A0995B400973634 /* FavoritesVC.xib */,
 				BDDB2FDE2A0D639600A83E5F /* FavoritesVM.swift */,
 			);
-			path = Favorites;
+			name = Favorites;
+			path = View/Favorites;
 			sourceTree = "<group>";
 		};
 		BD668AB22A0A87C600902831 /* ArtistDetailPage */ = {
@@ -332,8 +312,11 @@
 				BD8A98042A0BE09700EA96FA /* AlbumVM.swift */,
 				BD8A97FF2A0BDB7900EA96FA /* AlbumVC.swift */,
 				BD8A98002A0BDB7900EA96FA /* AlbumVC.xib */,
+				BD5AEAFB2A0967C200973634 /* MusicModel.swift */,
+				BD5AEAF92A09642100973634 /* AlbumModel.swift */,
 			);
-			path = Album;
+			name = Album;
+			path = View/Album;
 			sourceTree = "<group>";
 		};
 		BD8A98062A0C15AC00EA96FA /* Cell */ = {
@@ -418,10 +401,13 @@
 		BD9E5D3D2A08FFDB005B944F /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				BD5AEB0B2A09959100973634 /* Home */,
+				BD5AEB0C2A09959D00973634 /* Favorites */,
+				BD1FD4822A0A42E100525E67 /* ArtistsList */,
+				BD668AB22A0A87C600902831 /* ArtistDetailPage */,
+				BD8A97FE2A0BDB5700EA96FA /* Album */,
 				BD99CF212A0C345E0031E074 /* Shared */,
-				BD5AEB062A09956A00973634 /* View */,
 				BD5AEB032A09876300973634 /* Utilities */,
-				BD5AEAF62A094AE100973634 /* Model */,
 				BD9E5D412A090DF9005B944F /* Service */,
 			);
 			path = Features;
