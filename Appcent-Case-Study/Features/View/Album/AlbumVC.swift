@@ -63,15 +63,9 @@ extension AlbumVC: UITableViewDelegate,UITableViewDataSource{
     
 private extension AlbumVC{
     func bind(){
-        allTracksbind()
-        reloadBind()
-        
+        allTracksbind()        
     }
-    func reloadBind(){
-        CoreService.shared?.reloadPage.subscribe { [weak self] _ in
-            //self?.tableView.reloadData()
-        }.disposed(by: viewModel.disposeBag)
-    }
+    
     func allTracksbind(){
         viewModel.allTracks
             .subscribe {[weak self] response in
