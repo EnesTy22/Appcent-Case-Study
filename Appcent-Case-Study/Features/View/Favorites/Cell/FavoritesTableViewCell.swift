@@ -82,24 +82,31 @@ final class FavoritesTableViewCell: UITableViewCell {
             playBtn.setAttributedTitle(attributedString, for: .normal)
         }
     }
-    
-    func playBtnClicked(isPlaying:Bool){
-        if isPlaying && !viewModel.isAlreadyPlaying{
-            viewModel.isAlreadyPlaying = true
-            MusicPlayer.shared.playTrack(url:viewModel.track.value?.preview,trackId: viewModel.trackId.value)
+    func attributedString(text:String){
+        let attributedString = NSAttributedString(string: "\(text)", attributes: [
+            .foregroundColor: UIColor.black,
+            .font: UIFont.systemFont(ofSize: 12),
+        ])
+        playBtn.setAttributedTitle(attributedString, for: .normal)
+
+    }
+    func onMusicStartIcon(){
+        if(animationView == nil){
             animationView = .init(name:"Play")
             animationView?.frame = playBtn.bounds
             playBtn.addSubview(animationView!)
             animationView?.loopMode = .loop
             animationView?.play()
             playBtn.setImage(UIImage(), for: .normal)
-            let attributedString = NSAttributedString(string: "", attributes: [
-                .foregroundColor: UIColor.black,
-                .font: UIFont.systemFont(ofSize: 12),
-            ])
-            playBtn.setAttributedTitle(attributedString, for: .normal)
-        activeTrackIdBind()
-
+        }
+        
+    }
+    func playBtnClicked(isPlaying:Bool){
+        if isPlaying && !viewModel.isAlreadyPlaying{
+            viewModel.isAlreadyPlaying = true
+            MusicPlayer.shared.playTrack(url:viewModel.track.value?.preview,trackId: viewModel.trackId.value)
+            onMusicStartIcon()
+            attributedString(text: "")
 
         }
         else{
@@ -108,14 +115,7 @@ final class FavoritesTableViewCell: UITableViewCell {
             animationView?.removeFromSuperview()
             animationView = nil
             playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            
-            let attributedString = NSAttributedString(string: "play", attributes: [
-                .foregroundColor: UIColor.black,
-                .font: UIFont.systemFont(ofSize: 12),
-            ])
-
-            playBtn.setAttributedTitle(attributedString, for: .normal)
-
+            attributedString(text: "play")
         }
     }
    
@@ -125,53 +125,26 @@ final class FavoritesTableViewCell: UITableViewCell {
 }
 
 private extension FavoritesTableViewCell{
-    private func bind(){
+    func bind(){
         favIconBind()
         trackBind()
     }
-    func activeTrackIdBind(){
-        activeTrackIdBindVar = MusicPlayer.shared.activeTrackId
+    
+    func favIconBind(){
+        viewModel.isInFav
             .distinctUntilChanged()
             .subscribe { [weak self] response in
-                self?.checkIfMusicActive(response: response.element, id: self?.viewModel.track.value?.id)
-            }
-        
-    }
-    func checkIfMusicActive(response:Int?,id:Int?){
-        if response != id {
-            activeTrackIdBindVar?.dispose()
-            playBtnClicked(isPlaying: false)
-        }
-        
+                var iconType = response ? ".fill" : ""
+                self?.favBtn.setImage(UIImage(systemName: "heart\(iconType)"), for: .normal)
+            }.disposed(by: viewModel.disposeBag)
     }
     
-        func favIconBind(){
-            viewModel.isInFav
-                .distinctUntilChanged()
-                .subscribe { [weak self] response in
-                    
-                    if response {
-                        self?.addItFav()
-                    }
-                    else{
-                        self?.removeFav()
-                    }
-                    
-                }.disposed(by: viewModel.disposeBag)
-        }
-        func trackBind(){
-            viewModel.track
-                .compactMap{$0}
-                .subscribe { [weak self] response in
-                    self?.configure(track: response, trackCover:self?.viewModel.trackCover)
-                    //self?.checkIfMusicActive(response: MusicPlayer.shared.activeTrackId.value, id: response.id)
-                }.disposed(by: viewModel.disposeBag)
-        }
-        func addItFav(){
-            favBtn.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        }
-        func removeFav(){
-            favBtn.setImage(UIImage(systemName: "heart"), for: .normal)
-        }
-        
+    func trackBind(){
+        viewModel.track
+            .compactMap{$0}
+            .subscribe { [weak self] response in
+                self?.configure(track: response, trackCover:self?.viewModel.trackCover)
+            }.disposed(by: viewModel.disposeBag)
     }
+    
+}

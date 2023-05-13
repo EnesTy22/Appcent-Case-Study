@@ -7,6 +7,8 @@ import RxSwift
 
 final class AlbumTableViewCell: UITableViewCell {
     
+    let viewModel = AlbumTableViewCellVM()
+    
     var animationView: LottieAnimationView?
     var activeTrackIdBindVar: Disposable?
 
@@ -29,7 +31,6 @@ final class AlbumTableViewCell: UITableViewCell {
         }
     }
     
-    let viewModel = AlbumTableViewCellVM()
 
     
     override func layoutSubviews() {
@@ -52,23 +53,36 @@ final class AlbumTableViewCell: UITableViewCell {
         trackLength.text = track.duration.minuteFormat()
     }
     
-    func playBtnClicked(isPlaying:Bool){
-        if isPlaying && !viewModel.isAlreadyPlaying{
-            viewModel.isAlreadyPlaying = true
-            MusicPlayer.shared.playTrack(url:viewModel.track.value?.preview,trackId: viewModel.track.value?.id ?? 0 )
+    func attributedString(text:String){
+        let attributedString = NSAttributedString(string: "\(text)", attributes: [
+            .foregroundColor: UIColor.black,
+            .font: UIFont.systemFont(ofSize: 12),
+        ])
+        playBtn.setAttributedTitle(attributedString, for: .normal)
+
+    }
+    
+    func onMusicStartIcon(){
+        if(animationView == nil){
             animationView = .init(name:"Play")
             animationView?.frame = playBtn.bounds
             playBtn.addSubview(animationView!)
             animationView?.loopMode = .loop
             animationView?.play()
             playBtn.setImage(UIImage(), for: .normal)
-            let attributedString = NSAttributedString(string: "", attributes: [
-                .foregroundColor: UIColor.black,
-                .font: UIFont.systemFont(ofSize: 12),
-            ])
-            playBtn.setAttributedTitle(attributedString, for: .normal)
+        }
+        
+    }
+    
+    func playBtnClicked(isPlaying:Bool){
+        if isPlaying && !viewModel.isAlreadyPlaying{
+            viewModel.isAlreadyPlaying = true
+            MusicPlayer.shared.playTrack(url:viewModel.track.value?.preview,trackId: viewModel.track.value?.id ?? 0 )
+            onMusicStartIcon()
+            attributedString(text:"")
             activeTrackIdBind()
         }
+        
         else{
             viewModel.isAlreadyPlaying = false
             MusicPlayer.shared.pause()
@@ -76,14 +90,10 @@ final class AlbumTableViewCell: UITableViewCell {
             animationView = nil
             playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
             
-            let attributedString = NSAttributedString(string: "play", attributes: [
-                .foregroundColor: UIColor.black,
-                .font: UIFont.systemFont(ofSize: 12),
-            ])
-
-            playBtn.setAttributedTitle(attributedString, for: .normal)
+            attributedString(text:"play")
 
         }
+        
     }
    
     @IBAction func addFavBtn(_ sender: Any) {
@@ -99,12 +109,8 @@ private extension AlbumTableViewCell{
         viewModel.isInFav
             .distinctUntilChanged()
             .subscribe { [weak self] response in
-            if response {
-                    self?.addItFav()
-            }
-            else{
-                self?.removeFav()
-            }
+                var iconType = response ? ".fill" : ""
+                self?.favBtn.setImage(UIImage(systemName: "heart\(iconType)"), for: .normal)
         }.disposed(by: viewModel.disposeBag)
     }
     func activeTrackIdBind(){
