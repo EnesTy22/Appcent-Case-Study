@@ -45,8 +45,5 @@
 
 ## Video
 
-<video width="30%" controls>
-  <source src="https://github.com/SiecleQ/Appcent-Case-Study/blob/assets/76806086/4685cc00-c8d1-423b-b9bd-0f2c27c6ed51/Video%20Demo.mp4?raw=true" type="video/mp4">
-  <source src="https://github.com/SiecleQ/Appcent-Case-Study/blob/assets/76806086/4685cc00-c8d1-423b-b9bd-0f2c27c6ed51/Video%20Demo.webm?raw=true" type="video/webm">
-  Your browser does not support the video tag.
-</video>
+
+https://github.com/SiecleQ/Appcent-Case-Study/assets/76806086/a11fa0e7-3a13-43dc-91d7-a2bf7ae49d63
